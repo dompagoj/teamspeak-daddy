@@ -39,7 +39,7 @@ async function main() {
 
     if (user.id !== LJOPI_DISCORD_ID) return
 
-    logger.log('Ljopi changed status!')
+    logger.log('Ljopi changed status! ', d.status, JSON.stringify(d.client_status, null, 2))
 
     LJOPI_ONLINE = d.status === 'online'
 
