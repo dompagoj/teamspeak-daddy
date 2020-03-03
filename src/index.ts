@@ -2,7 +2,7 @@ import { Client, Presence } from 'discord.js'
 import { existsSync } from 'fs'
 
 import { IRawEvent, IPresenceUpdateEvent } from './raw_event'
-import { createLock, lockFileDir, checkLock } from './lock'
+import { createLock, lockFileDir, lockExists } from './lock'
 import { Logger } from './logger'
 import { TeamspeakClient, DOMPAGOJ_TS_ID } from './teamspeak'
 
@@ -43,7 +43,7 @@ async function main() {
 
     LJOPI_ONLINE = d.status === 'online' && (d.client_status?.desktop === 'online' || d.client_status?.web === 'online')
 
-    if (!LJOPI_ONLINE || (await checkLock())) {
+    if (!LJOPI_ONLINE || (await lockExists())) {
       return logger.log('Ljopi either not online or lock active')
     }
 
@@ -63,7 +63,7 @@ async function main() {
 
     logger.log('Dompagoj connected to ts!')
 
-    if (!LJOPI_ONLINE || (await checkLock())) {
+    if (!LJOPI_ONLINE || (await lockExists())) {
       return logger.log('Ljopi either not online or lock active')
     }
 

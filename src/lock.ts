@@ -15,6 +15,6 @@ export async function createLock() {
   return writeFilePromise(lockFilePath, 1)
 }
 
-export async function checkLock() {
+export async function lockExists() {
   return existsPromise(lockFilePath)
 }
