@@ -67,8 +67,8 @@ async function main() {
       return logger.log('Ljopi either not online or lock active')
     }
 
-    if (!(await teamspeak.getDompa())) {
-      return logger.log('Dompagoj not on teamspeak')
+    if (!!(await teamspeak.getLjopi())) {
+      return logger.log('Ljopi is already on teamspeak')
     }
 
     const ljopi = await discord.fetchUser(LJOPI_DISCORD_ID)
