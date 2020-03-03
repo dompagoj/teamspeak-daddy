@@ -26,7 +26,7 @@ export class Logger {
   private transform(data: string) {
     const timestamp = new Date().toUTCString()
 
-    return `${timestamp} : ${data} \n\n`
+    return `${timestamp} : ${data} \n`
   }
 
   public log(...data: Loggable[]) {
