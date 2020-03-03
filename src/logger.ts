@@ -32,6 +32,8 @@ export class Logger {
   public log(...data: Loggable[]) {
     const transformed = this.transform(data.join(''))
 
+    console.log(transformed)
+
     if (this.writeStream) this.writeStream.write(transformed)
   }
 }
