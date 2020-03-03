@@ -74,6 +74,8 @@ async function main() {
     await ljopi.send('Ts')
     await createLock()
   })
+
+  logger.log('Listening...')
 }
 
 main().catch(console.error)
