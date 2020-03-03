@@ -6,6 +6,7 @@
   "scripts": {
     "start": "tsc && NODE_ENV=dev node build",
     "dev": "tsnd --respawn src",
+    "deploy": "npm run build && pm2 restart ljopi_discord_bot",
     "clean": "rm -rf build && rm tsconfig.tsbuildinfo && rm lockfile",
     "build": "tsc"
   },
