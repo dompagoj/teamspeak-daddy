@@ -53,7 +53,7 @@ async function main() {
 
     const ljopi = await discord.fetchUser(LJOPI_DISCORD_ID)
 
-    logger.log('Found ljopi: ', !!ljopi)
+    logger.log('Sending to ljopi and creating lock!')
     await ljopi.send('Ts')
     await createLock()
   })
