@@ -1,4 +1,4 @@
-import { Client } from 'discord.js'
+import { Client, Presence } from 'discord.js'
 import { existsSync } from 'fs'
 
 import { IRawEvent, IPresenceUpdateEvent } from './raw_event'
@@ -26,6 +26,9 @@ async function main() {
 
   await initializeClients()
   logger.log('Logged in!')
+
+  const ljopi = await discord.fetchUser(LJOPI_DISCORD_ID)
+  LJOPI_ONLINE = isOnlineFromPresence(ljopi.presence)
 
   //@ts-ignore
   discord.on('raw', async (event: IRawEvent) => {
@@ -92,4 +95,8 @@ async function initializeClients() {
   discord = new Client()
   const [teamspeakClient] = await Promise.all([TeamspeakClient.initialize(), discord.login()])
   teamspeak = teamspeakClient
+}
+
+function isOnlineFromPresence({ status, clientStatus }: Presence) {
+  return status === 'online' && (clientStatus?.desktop === 'online' || clientStatus?.web === 'online')
 }
