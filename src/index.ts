@@ -28,7 +28,7 @@ async function main() {
   logger.log('Logged in!')
 
   const ljopi = await discord.fetchUser(LJOPI_DISCORD_ID)
-  LJOPI_ONLINE = isOnlineFromPresence(ljopi.presence)
+  LJOPI_ONLINE = ljopi.presence.status === 'online'
 
   //@ts-ignore
   discord.on('raw', async (event: IRawEvent) => {
@@ -39,9 +39,9 @@ async function main() {
 
     if (user.id !== LJOPI_DISCORD_ID) return
 
-    logger.log('Dompagoj changed status!')
+    logger.log('Ljopi changed status!')
 
-    LJOPI_ONLINE = d.status === 'online' && (d.client_status?.desktop === 'online' || d.client_status?.web === 'online')
+    LJOPI_ONLINE = d.status === 'online'
 
     if (!LJOPI_ONLINE || (await lockExists())) {
       return logger.log('Ljopi either not online or lock active')
@@ -95,8 +95,4 @@ async function initializeClients() {
   discord = new Client()
   const [teamspeakClient] = await Promise.all([TeamspeakClient.initialize(), discord.login()])
   teamspeak = teamspeakClient
-}
-
-function isOnlineFromPresence({ status, clientStatus }: Presence) {
-  return status === 'online' && (clientStatus?.desktop === 'online' || clientStatus?.web === 'online')
 }
