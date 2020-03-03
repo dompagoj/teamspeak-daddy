@@ -43,9 +43,8 @@ async function main() {
 
     LJOPI_ONLINE = d.status === 'online'
 
-    if (!LJOPI_ONLINE || (await lockExists())) {
-      return logger.log('Ljopi either not online or lock active')
-    }
+    if (!LJOPI_ONLINE) return logger.log('Ljopi not online')
+    if (await lockExists()) return logger.log('Lock exists')
 
     if (!(await teamspeak.shouldSendToLjopi())) {
       return logger.log('teamspeak.shouldSendToLjopi is false')
@@ -63,9 +62,8 @@ async function main() {
 
     logger.log('Dompagoj connected to ts!')
 
-    if (!LJOPI_ONLINE || (await lockExists())) {
-      return logger.log('Ljopi either not online or lock active')
-    }
+    if (!LJOPI_ONLINE) return logger.log('Ljopi not online')
+    if (await lockExists()) return logger.log('Lock exists...')
 
     if (!!(await teamspeak.getLjopi())) {
       return logger.log('Ljopi is already on teamspeak')
