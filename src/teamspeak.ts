@@ -1,8 +1,8 @@
 import { TeamSpeak } from 'ts3-nodejs-library'
 import { config } from './config'
 
-export const DOMPAGOJ_TS_ID = 118
-export const LJOPI_TS_ID = 123
+export const DOMPAGOJ_TS_ID = 2
+export const LJOPI_TS_ID = 4
 
 export class TeamspeakClient {
   constructor(private teamspeak: TeamSpeak) {}
@@ -36,11 +36,11 @@ export class TeamspeakClient {
   }
 
   public getDompa() {
-    return this.teamspeak.getClientByID(DOMPAGOJ_TS_ID)
+    return this.teamspeak.getClientByDBID(DOMPAGOJ_TS_ID)
   }
 
   public getLjopi() {
-    return this.teamspeak.getClientByID(LJOPI_TS_ID)
+    return this.teamspeak.getClientByDBID(LJOPI_TS_ID)
   }
 
   public async shouldSendToLjopi() {

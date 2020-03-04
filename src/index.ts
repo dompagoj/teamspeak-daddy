@@ -58,7 +58,7 @@ async function main() {
   })
 
   teamspeak.instance.on('clientconnect', async ({ client }) => {
-    if (client.clid !== DOMPAGOJ_TS_ID) return
+    if (client.databaseId !== DOMPAGOJ_TS_ID) return
 
     logger.log('Dompagoj connected to ts!')
 
