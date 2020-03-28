@@ -72,11 +72,15 @@ export class TeamspeakClient {
     await this.teamspeak.sendTextMessage(1, TextMessageTargetMode.CHANNEL, msg)
   }
 
-  public async moveToChannel(channelId: number | TeamSpeakChannel) {
+  public async moveBotToChannel(channelId: number | TeamSpeakChannel) {
     const channel = typeof channelId === 'number' ? await this.teamspeak.getChannelByID(channelId) : channelId
     if (!channel) return
 
     await this.teamspeak.clientMove(TeamspeakClient.whoami.client_id, channel.cid)
     TeamspeakClient.currentChannel = channel
+  }
+
+  public async getChannels() {
+    return this.teamspeak.channelList()
   }
 }
