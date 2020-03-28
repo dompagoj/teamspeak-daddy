@@ -1,5 +1,0 @@
-.vscode
-build
-.env
-tsconfig.tsbuildinfo
-node_modules
