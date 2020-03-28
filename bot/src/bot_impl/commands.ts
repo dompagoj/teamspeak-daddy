@@ -1,9 +1,10 @@
 import * as DB from '../db/connection'
 import { TeamspeakClient } from '../teamspeak'
+import { TeamSpeakClient } from 'ts3-nodejs-library'
 
 interface BotCommandsMap {
   [key: string]: {
-    handler: (params: string) => Promise<any> | undefined
+    handler: (invoker: TeamSpeakClient, params: string) => Promise<any> | undefined
     description: string
   }
 }
@@ -27,7 +28,7 @@ async function send(msg: string) {
   return TeamspeakClient.instance.sendMessageToChannel(msg)
 }
 
-async function getAllMessages(params: string) {
+async function getAllMessages(invoker: TeamSpeakClient, params: string) {
   const messages = await DB.getMessages()
 
   const msgFormatted = messages.map(m => `${m.trigger}: ${m.content}`).join('\n')
@@ -35,9 +36,15 @@ async function getAllMessages(params: string) {
   return send('\n' + msgFormatted)
 }
 
-async function pokeAll(msg: string) {
+async function pokeAll(invoker: TeamSpeakClient, msg: string) {
+  const teamspeak = TeamspeakClient.instance
+
+  if (!(await teamspeak.isClientServerAdmin(invoker))) {
+    return send('Poke all moze zvat samo server admin :D ')
+  }
+
   console.log('Poking all! ', msg)
-  const clients = await TeamspeakClient.instance.getOnlineUsers()
+  const clients = await teamspeak.getOnlineUsers()
 
   return clients.map(client => {
     // causes invalid client type exception, not sure why
@@ -45,7 +52,7 @@ async function pokeAll(msg: string) {
   })
 }
 
-async function getAllCommands(_: string) {
+async function getAllCommands(invoker: TeamSpeakClient, _: string) {
   const commands = Object.entries(BOT_COMMANDS)
     .map(([name, { description }]) => `${name}: ${description}`)
     .join('\n')

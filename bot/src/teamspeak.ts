@@ -1,10 +1,11 @@
-import { TeamSpeak, TextMessageTargetMode, TeamSpeakChannel } from 'ts3-nodejs-library'
+import { TeamSpeak, TextMessageTargetMode, TeamSpeakChannel, TeamSpeakClient } from 'ts3-nodejs-library'
 import { config } from './config'
 import { Whoami } from 'ts3-nodejs-library/lib/types/ResponseTypes'
 import { handleTeamspeakMessage } from './bot_impl/bot-response-handlers'
 
 export const DOMPAGOJ_TS_ID = 2
 export const LJOPI_TS_ID = 4
+const SERVER_ADMIN_GROUP_ID = 17
 
 export class TeamspeakClient {
   private static _instance: TeamspeakClient
@@ -70,6 +71,20 @@ export class TeamspeakClient {
 
   public async sendMessageToChannel(msg: string) {
     await this.teamspeak.sendTextMessage(1, TextMessageTargetMode.CHANNEL, msg)
+  }
+
+  public async getServerGroups() {
+    return this.teamspeak.serverGroupList()
+  }
+
+  public async isClientInGroup(group: number | string) {
+    const groups = await this.teamspeak.serverGroupsByClientId(1)
+
+    return groups.find(g => (typeof group === 'string' ? g.name : g.cldbid))
+  }
+
+  public async isClientServerAdmin(client: TeamSpeakClient) {
+    return !!client.servergroups?.find(g => g === SERVER_ADMIN_GROUP_ID)
   }
 
   public async moveBotToChannel(channelId: number | TeamSpeakChannel) {
