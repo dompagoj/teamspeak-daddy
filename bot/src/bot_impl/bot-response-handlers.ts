@@ -4,17 +4,19 @@ import { TeamspeakClient } from '../teamspeak'
 import { BOT_COMMANDS } from './commands'
 
 export async function handleTeamspeakMessage({ msg, invoker }: TextMessage) {
-  if (!msg.startsWith('b!')) return
+  if (!msg.startsWith('daddy,')) return
 
   console.log('Invoker groups: ', invoker.servergroups)
-  const [_, trigger] = msg.split('b!')
-  const [command, ...params] = trigger.trim().split(' ')
+  let [_, trigger] = msg.split('daddy,')
+  trigger = trigger.trim()
+
+  const [command, ...params] = trigger.split(' ')
 
   const foundCommand = BOT_COMMANDS[command]
 
-  if (foundCommand) return foundCommand.handler(invoker, params.join(' '))
+  if (foundCommand) return foundCommand.handler(invoker, params.join(' ').trim())
 
-  const message = await DB.getMessageByTrigger(trigger.trim())
+  const message = await DB.getMessageByTrigger(trigger)
   const { instance: teamspeak } = TeamspeakClient
   if (!message) return teamspeak.sendMessageToChannel(`Nekuzim kaj je "${trigger}" pogledaj kaj sve postoji idiote`)
 
