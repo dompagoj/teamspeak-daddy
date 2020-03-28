@@ -12,7 +12,7 @@ async function main() {
 
   const app = express()
   app.use(bodyParser.json())
-  app.use(cors)
+  app.use(cors())
   app.use(ApiRouter)
   app.use(cors())
   app.listen(config.port, () => console.log(`Server listeting on port ${config.port}`))
