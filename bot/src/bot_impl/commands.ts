@@ -22,10 +22,6 @@ export const BOT_COMMANDS: BotCommandsMap = {
     handler: pokeAll,
     description: 'Pokaj sve ljude (eg. b! poke_all <poruka> )',
   },
-  vrijeme: {
-    handler: getTime,
-    description: 'Koliko je sati',
-  },
 }
 
 async function send(msg: string) {
