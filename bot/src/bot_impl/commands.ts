@@ -84,7 +84,7 @@ async function mathEvaluate(invoker: TeamSpeakClient, expr: string) {
 }
 
 async function addMessage(invoker: TeamSpeakClient, param: string) {
-  if (!param.includes(':')) return send('(eg. daddy, dodaj <ime poruke> : <odgovor daddyia>)')
+  if (!param.includes(':')) return send('(eg. daddy, dodaj <ime poruke> : <odgovor daddyia> )')
 
   const [trigger, content] = param.split(':')
 
