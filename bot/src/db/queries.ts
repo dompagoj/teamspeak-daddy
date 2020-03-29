@@ -13,5 +13,5 @@ export const GET_MESSAGE_BY_ID = `
 `
 
 export const CREATE_MESSAGE = `
-  INSERT INTO message(trigger, content) values ($1, $2) RETURNING id
+  INSERT INTO message(trigger, content) values (trim($1), trim($2)) RETURNING id
 `

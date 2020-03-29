@@ -28,6 +28,10 @@ export const BOT_COMMANDS: BotCommandsMap = {
     handler: mathEvaluate,
     description: 'Daddy rijesava bilo kakvu matematiku',
   },
+  dodaj: {
+    handler: addMessage,
+    description: 'Dodaj poruku (eg. daddy, dodaj <ime poruke> : <odgovor daddyia>)',
+  },
 }
 
 async function send(msg: string) {
@@ -77,4 +81,14 @@ async function mathEvaluate(invoker: TeamSpeakClient, expr: string) {
 
     return send('Neznam to izracunati :( ')
   }
+}
+
+async function addMessage(invoker: TeamSpeakClient, param: string) {
+  if (!param.includes(':')) return send('(eg. daddy, dodaj <ime poruke> : <odgovor daddyia>)')
+
+  const [trigger, content] = param.split(':')
+
+  await DB.createMessage({ trigger, content })
+
+  return send(`Poruka ${trigger} je napravljena sa odgovorom: ${content}`)
 }
