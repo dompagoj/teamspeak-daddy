@@ -1,5 +1,5 @@
 import { TeamSpeakClient } from 'ts3-nodejs-library'
-import Mathjs from 'mathjs'
+import * as Mathjs from 'mathjs'
 
 import * as DB from '../db/connection'
 import { TeamspeakClient } from '../teamspeak'
@@ -67,11 +67,14 @@ async function getAllCommands(invoker: TeamSpeakClient, _: string) {
 }
 
 async function mathEvaluate(invoker: TeamSpeakClient, expr: string) {
+  console.log('Mathjs evaluating: ', expr)
   try {
     const result = Mathjs.evaluate(expr)
 
     return send(result?.toString())
   } catch (e) {
+    console.log(e)
+
     return send('Neznam to izracunati :( ')
   }
 }
