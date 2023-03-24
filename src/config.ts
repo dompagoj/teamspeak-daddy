@@ -14,6 +14,6 @@ export const config = {
     },
     isProd() {
       return this.value === 'prod' || this.value === 'production'
-    }
-  }
+    },
+  },
 }
