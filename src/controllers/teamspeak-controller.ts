@@ -15,7 +15,7 @@ export async function moveBotToChannel(req: Request, res: Response) {
 
   if (!channelIdParsed) return badRequest(res)
 
-  await TeamspeakClient.instance.moveBotToChannel(channelIdParsed)
+  await TeamspeakClient.instance.moveBotToChannel(channelId)
 
   return ok(res)
 }

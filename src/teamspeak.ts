@@ -7,7 +7,7 @@ const SERVER_ADMIN_GROUP_ID = 17
 
 export class TeamspeakClient {
   private static _instance: TeamspeakClient
-  public static currentChannel: TeamSpeakChannel
+  public static currentChannel?: TeamSpeakChannel
   public static whoami: Whoami
 
   private constructor(private teamspeak: TeamSpeak) {}
@@ -15,7 +15,6 @@ export class TeamspeakClient {
   public static async initialize() {
     if (this._instance) return this._instance
 
-    console.log('Connecting to ts...')
     const teamspeak = await TeamSpeak.connect({
       host: config.tsServerIp,
       username: config.tsUsername,
@@ -24,17 +23,9 @@ export class TeamspeakClient {
       serverport: 9987,
       nickname: 'Daddy',
     })
-    console.log('Connected!')
 
     this.whoami = await teamspeak.whoami()
-    // @ts-ignore
-    this.currentChannel = await teamspeak.getChannelByID(this.whoami.client_channel_id)
-
-    teamspeak.registerEvent('server')
-    teamspeak.registerEvent('channel')
-    teamspeak.registerEvent('textserver')
-    teamspeak.registerEvent('textchannel')
-    teamspeak.registerEvent('textprivate')
+    this.currentChannel = await teamspeak.getChannelById(this.whoami.client_channel_id as string)
 
     this._instance = new TeamspeakClient(teamspeak)
 
@@ -67,8 +58,8 @@ export class TeamspeakClient {
     return this.teamspeak.clientUpdate({ clientNickname })
   }
 
-  public async sendMessageToChannel(msg: string) {
-    await this.teamspeak.sendTextMessage(1, TextMessageTargetMode.CHANNEL, msg)
+  public async sendMessageToChannel(channel: TeamSpeakChannel.ChannelType, msg: string) {
+    await this.teamspeak.sendTextMessage(channel, TextMessageTargetMode.CHANNEL, msg)
   }
 
   public async getServerGroups() {

@@ -1,8 +1,10 @@
 version: '3'
 services:
   dbpostgres:
-    image: 'postgres:12-alpine'
+    image: 'postgres:15.2-alpine'
     container_name: 'teamspeak_bot_db'
+    env_file:
+      - .env
     ports:
       - '5430:5432'
     environment:

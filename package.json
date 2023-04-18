@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && NODE_ENV=dev node build",
-    "dev": "tsnd --respawn src",
-    "deploy": "npm run build && pm2 restart ljopi_discord_bot",
+    "start": "tsc && node build",
     "clean": "rm -rf build && rm tsconfig.tsbuildinfo",
     "build": "tsc",
     "migrate:create": "knex migrate:make $1 --env all -x ts",
@@ -36,8 +34,6 @@
     "@types/mathjs": "^9.4.2",
     "@types/node": "18.15.7",
     "@types/pg": "^8.6.6",
-    "nodemon": "^2.0.22",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.2"
   }
 }

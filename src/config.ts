@@ -7,6 +7,9 @@ export const config = {
   tsPassword: process.env.TS_PW,
   tsUsername: process.env.TS_USERNAME,
   port: process.env.PORT,
+  dbPassword: process.env.DB_PASSWORD,
+  dbUser: process.env.DB_USERNAME,
+  dbDatabaseName: process.env.DB_NAME,
   env: {
     value: process.env.NODE_ENV,
     isDev() {

@@ -1,9 +1,13 @@
 import { Pool } from 'pg'
 import * as Queries from './queries'
 import { IMessage, IMessageCreate } from '../types/message'
+import { config } from '../config'
 
 export const DBConnection = new Pool({
-  connectionString: process.env.DB_CONNECTION_STRING,
+  password: config.dbPassword,
+  user: config.dbUser,
+  database: config.dbDatabaseName,
+  port: 5430,
 })
 
 export async function getMessages(): Promise<IMessage[]> {

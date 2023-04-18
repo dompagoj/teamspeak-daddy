@@ -6,7 +6,6 @@ import { BOT_COMMANDS } from './commands'
 export async function handleTeamspeakMessage({ msg, invoker }: TextMessage) {
   if (!msg.startsWith('daddy,')) return
 
-  console.log('Invoker groups: ', invoker.servergroups)
   let [_, trigger] = msg.split('daddy,')
   trigger = trigger.trim()
 
@@ -18,7 +17,8 @@ export async function handleTeamspeakMessage({ msg, invoker }: TextMessage) {
 
   const message = await DB.getMessageByTrigger(trigger)
   const { instance: teamspeak } = TeamspeakClient
-  if (!message) return teamspeak.sendMessageToChannel(`Nekuzim kaj je "${trigger}" pogledaj kaj sve postoji idiote`)
+  // if (!message) // TODO
+  // return teamspeak.sendMessageToChannel(invoker. `Nekuzim kaj je "${trigger}" pogledaj kaj sve postoji idiote`)
 
-  return teamspeak.sendMessageToChannel(message.content)
+  // return teamspeak.sendMessageToChannel(message.content)
 }

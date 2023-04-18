@@ -35,7 +35,7 @@ export const BOT_COMMANDS: BotCommandsMap = {
 }
 
 async function send(msg: string) {
-  return TeamspeakClient.instance.sendMessageToChannel(msg)
+  // return TeamspeakClient.instance.sendMessageToChannel(msg) / TODO
 }
 
 async function getAllMessages(invoker: TeamSpeakClient, params: string) {
